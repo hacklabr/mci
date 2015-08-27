@@ -3,6 +3,7 @@
 require('dotenv').load();
 
 module.exports = {
+	baseUri: '/2014/',
 	apiUrl: process.env.MCI_API_URL || 'http://spcultura.prefeitura.sp.gov.br/api',
 	projectId: process.env.MCI_PROJECT_ID || 4,
 	wpUrl: process.env.MCI_WP_URL || false,

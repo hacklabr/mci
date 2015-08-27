@@ -35,7 +35,10 @@ module.exports = function(grunt) {
 		jade: {
 			compile: {
 				options: {
-					doctype: 'html'
+					doctype: 'html',
+					data: {
+						config: require('./config.js')
+					}
 				},
 				files: [{
 					expand: true,
