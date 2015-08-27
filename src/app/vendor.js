@@ -22,4 +22,4 @@ moment.locale('pt-br', {
 		lastWeek: 'DD/MM [às] LT',
 		sameElse: 'DD/MM [às] LT'
 	},
-})
+});

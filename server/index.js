@@ -164,6 +164,8 @@ function init() {
 			request(eventReq, function(reqErr, reqRes, body) {
 				if(reqErr) {
 					res.send(reqErr);
+				} else if(!body){
+					res.send({occurrences:[]});
 				} else {
 					var e = JSON.parse(body)[0];
 					if(!e || typeof e == 'undefined')

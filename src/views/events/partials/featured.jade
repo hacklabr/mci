@@ -21,6 +21,6 @@ section#highlight-event.clearfix(ng-show="featured")
 							| de você)
 				header
 					h3
-						a(href="/agenda/{{featEvent.event.id}}/") {{featEvent.event.name}}
+						a(href= config.baseUri + "agenda/{{featEvent.event.id}}/") {{featEvent.event.name}}
 				section.content
 					p.description {{featEvent.event.shortDescription}}

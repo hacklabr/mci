@@ -3,7 +3,7 @@ section#list-event(ng-class="{tag: tag}")
 	header.list-header.main-header.clearfix
 		.clearfix
 			h2(ng-show="tag || space")
-				a(href= config.baseUri+"/agenda/") Agenda
+				a(href= config.baseUri+"agenda/") Agenda
 			h1
 				span(ng-hide="tag || space") Agenda
 				span.tag(ng-show="tag || space") {{tag || space.name}}
