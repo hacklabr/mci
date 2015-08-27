@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 angular.module('mci.events', [
 	'ui.router',
 	'pickadate',
@@ -15,7 +17,7 @@ angular.module('mci.events', [
 			.state('events', {
 				url: '/agenda/',
 				controller: 'EventIndexController',
-				templateUrl: '/views/events/index.html'
+				templateUrl: BASE_URI + 'views/events/index.html'
 			})
 			.state('events.filter', {
 				url: ':tag/:startDate/:endDate/:linguagem/:search/:space/:past/:page/'
@@ -23,7 +25,7 @@ angular.module('mci.events', [
 			.state('eventsSingle', {
 				url: '/agenda/:eventId/',
 				controller: 'EventSingleController',
-				templateUrl: '/views/events/single.html',
+				templateUrl: BASE_URI + 'views/events/single.html',
 				resolve: {
 					'EventData': [
 						'$stateParams',

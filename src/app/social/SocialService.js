@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 module.exports = [
 	'$http',
 	'$q',
@@ -11,7 +13,7 @@ module.exports = [
 
 			$http({
 				method: 'GET',
-				url: '/api/social',
+				url: BASE_URI + 'api/social',
 				params: {
 					page: page,
 					perPage: perPage

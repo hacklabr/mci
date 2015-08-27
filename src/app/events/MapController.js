@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 module.exports = [
 	'ngDialog',
 	'leafletData',
@@ -81,7 +83,7 @@ module.exports = [
 			} else {
 
 				ngDialog.open({
-					template: '/views/events/map.html',
+					template: BASE_URI + 'views/events/map.html',
 					scope: $scope
 				});
 

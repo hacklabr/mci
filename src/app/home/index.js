@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 angular.module('mci.home', [
 	'mci.news',
 	'mci.events'
@@ -12,7 +14,7 @@ angular.module('mci.home', [
 			.state('home', {
 				url: '/',
 				controller: 'HomeController',
-				templateUrl: '/views/pages/home.html',
+				templateUrl: BASE_URI + 'views/pages/home.html',
 				resolve: {
 					NewsData: [
 						'$q',

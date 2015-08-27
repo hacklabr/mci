@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 module.exports = [
 	'$http',
 	'$q',
@@ -146,7 +148,7 @@ module.exports = [
 					event = {};
 				var deferred = $q.defer();
 				if(!event._loaded) {
-					$http.get('/api/event/' + eventId).success(function(data) {
+					$http.get(BASE_URI + 'api/event/' + eventId).success(function(data) {
 						event = _.extend(event, data);
 						event._loaded = true;
 						deferred.resolve(event);

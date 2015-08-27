@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 angular.module('mci.news', [
 	'ui.router'
 ])
@@ -13,7 +15,7 @@ angular.module('mci.news', [
 			.state('news', {
 				url: '/noticias/',
 				controller: 'NewsIndexController',
-				templateUrl: '/views/news/index.html',
+				templateUrl: BASE_URI + 'views/news/index.html',
 				resolve: {
 					'NewsData': [
 						'NewsService',
@@ -88,7 +90,7 @@ angular.module('mci.news', [
 			.state('newsSingle', {
 				url: '/noticias/:postId/',
 				controller: 'NewsSingleController',
-				templateUrl: '/views/news/single.html',
+				templateUrl: BASE_URI + 'views/news/single.html',
 				resolve: {
 					'PostData': [
 						'$stateParams',

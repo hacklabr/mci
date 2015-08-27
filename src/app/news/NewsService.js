@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 module.exports = [
 	'$rootScope',
 	'$http',
@@ -19,7 +21,7 @@ module.exports = [
 			var loadId = Loading.add();
 
 			$.ajax({
-				url: '/api/news',
+				url: BASE_URI + 'api/news',
 				data: query,
 				dataType: 'json',
 				cache: true,
@@ -123,7 +125,7 @@ module.exports = [
 
 				var loadId = Loading.add();
 				$.ajax({
-					url: '/api/news/' + postId,
+					url: BASE_URI + 'api/news/' + postId,
 					dataType: 'json',
 					cache: true,
 					success: function(data, text, xhr) {

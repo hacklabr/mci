@@ -1,5 +1,7 @@
 'use strict';
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
+
 angular.module('mci.social', [
 	'ui.router',
 	'infinite-scroll',
@@ -14,7 +16,7 @@ angular.module('mci.social', [
 			.state('social', {
 				url: '/na-rede/',
 				controller: 'SocialController',
-				templateUrl: '/views/social/index.html',
+				templateUrl: BASE_URI + 'views/social/index.html',
 				resolve: {
 					'SocialData': [
 						'SocialService',

@@ -3,7 +3,7 @@ section#single-event(ng-controller="EventController")
 		.clearfix
 			.image(style="background-image:url({{event['@files:header'].url}});")
 			h2
-				a(href="/agenda/") Agenda
+				a(href= config.baseUri+"/agenda/") Agenda
 			h1 {{event.name}}
 
 	.single-content(ng-class="{'with-sidebar': event.occurrences.length>1 || event.terms.tag.length}")

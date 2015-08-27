@@ -13,6 +13,7 @@ require('./social');
 
 require('./facebook');
 
+var BASE_URI = (new URL(document.baseURI)).pathname;
 /*
  * App
  */
@@ -39,11 +40,11 @@ angular.module('mci', [
 		$stateProvider
 			.state('about', {
 				url: '/sobre/',
-				templateUrl: '/views/pages/about.html'
+				templateUrl: BASE_URI + 'views/pages/about.html'
 			})
 			.state('press', {
 				url: '/imprensa/',
-				templateUrl: '/views/pages/press.html'
+				templateUrl: BASE_URI + 'views/pages/press.html'
 			});
 
 		/*
@@ -148,32 +149,32 @@ angular.module('mci', [
 		$scope.nav = [
 			{
 				title: 'Página inicial',
-				href: '/',
+				href: BASE_URI,
 				icon: $sce.trustAsHtml('&#8962;')
 			},
 			{
 				title: 'Agenda',
-				href: '/agenda/',
+				href: BASE_URI + 'agenda/',
 				icon: $sce.trustAsHtml('&#128197;')
 			},
 			{
 				title: 'Notícias',
-				href: '/noticias/',
+				href: BASE_URI + 'noticias/',
 				icon: $sce.trustAsHtml('&#128196;')
 			},
 			{
 				title: 'Na rede',
-				href: '/na-rede/',
+				href: BASE_URI + 'na-rede/',
 				icon: $sce.trustAsHtml('&#127748;')
 			},
 			{
 				title: 'Imprensa',
-				href: '/imprensa/',
+				href: BASE_URI + 'imprensa/',
 				icon: $sce.trustAsHtml('&#127908;')
 			},
 			{
 				title: 'Sobre',
-				href: '/sobre/',
+				href: BASE_URI + 'sobre/',
 				icon: $sce.trustAsHtml('&#8505;')
 			}
 		];
@@ -282,8 +283,11 @@ angular.module('mci', [
 ]);
 
 $(document).ready(function() {
+	var baseUri = $('head base').attr('href');
+	angular.module('mci').constant('BASE_URI', baseUri);
+
 	$('#loading').addClass('active');
-	$.get('/api/data', function(data) {
+	$.get(baseUri + 'api/data', function(data) {
 		window.mci = data;
 		$('#loading').removeClass('active');
 		angular.bootstrap(document, ['mci']);

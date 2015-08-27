@@ -14,9 +14,9 @@ html(lang='pt-BR')
 
 		header#masthead
 			h1
-				a(href="/")
+				a(href= config.baseUri)
 					span Mês da Cultura Independente
-					img(src='/img/logo.png' alt='Mês da Cultura Independente')
+					img(src= config.baseUri + 'img/logo.png' alt='Mês da Cultura Independente')
 			nav#mastnav.clearfix(ng-controller="NavCtrl")
 				p.currentHover(ng-bind="currentHover")
 				ul(ng-mouseleave="updateHover('')")
@@ -34,7 +34,7 @@ html(lang='pt-BR')
 		footer#mastfoot
 			#by
 				h3 Realização
-				img(alt="Secretaria Municipal de Cultura de São Paulo" src="/img/logos/secult.jpg")
+				img(alt="Secretaria Municipal de Cultura de São Paulo", src= config.baseUri + "img/logos/secult.jpg")
 
 		#loading(loading-status-message='loading-status-message', ng-class='{active: loads.length}')
 		.loading-message
