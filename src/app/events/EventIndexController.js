@@ -347,7 +347,6 @@ module.exports = [
 
         /*
          * Load space distances and rerender featured event
-         */
         Event.initUserLocation().then(function() {
             _.each($scope.spaces, function(space) {
                 var d = Event.getSpaceDistance(space);
@@ -356,6 +355,7 @@ module.exports = [
             });
             $scope.featured = $scope.featuredEvent(true);
         });
+         */
 
         $scope.openFeatured = function(event, featEvent) {
             if(featEvent != $scope.openedFeatured) {
