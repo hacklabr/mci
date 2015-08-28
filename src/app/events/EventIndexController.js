@@ -83,6 +83,7 @@ module.exports = [
             $scope.eventNav.curPage = $state.params.page-1;
             $scope.eventNav.offset = $scope.eventNav.perPage * $scope.eventNav.curPage;
         }
+        $scope.isFutureEvents = $state.params.past === '0';
 
         $scope.$watch('eventNav.curPage', function(page, prevPage) {
             if(page || prevPage) {
