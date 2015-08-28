@@ -1,0 +1,10 @@
+#tags.box-section(ng-controller="EventController" ng-show="tags")
+
+	header.box-section-header.tags-header.clearfix
+		h2 Tags
+
+	section.box-section-content.tags-content
+
+		ul.tag-list.clearfix
+			li(ng-repeat="tag in tags" ng-show="tag")
+				a(href="javascript:void(0);" ng-click="accessTag(tag)") {{tag}}
