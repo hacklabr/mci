@@ -3,41 +3,41 @@
 var BASE_URI = (new URL(document.baseURI)).pathname;
 
 angular.module('mci.events', [
-	'ui.router',
-	'pickadate',
-	'leaflet-directive',
-	'wu.masonry',
-	'ngDialog'
+    'ui.router',
+    'pickadate',
+    'leaflet-directive',
+    'wu.masonry',
+    'ngDialog'
 ])
 .config([
-	'$stateProvider',
-	function($stateProvider) {
+    '$stateProvider',
+    function($stateProvider) {
 
-		$stateProvider
-			.state('events', {
-				url: '/agenda/',
-				controller: 'EventIndexController',
-				templateUrl: BASE_URI + 'views/events/index.html'
-			})
-			.state('events.filter', {
-				url: ':tag/:startDate/:endDate/:linguagem/:search/:space/:past/:page/'
-			})
-			.state('eventsSingle', {
-				url: '/agenda/:eventId/',
-				controller: 'EventSingleController',
-				templateUrl: BASE_URI + 'views/events/single.html',
-				resolve: {
-					'EventData': [
-						'$stateParams',
-						'EventService',
-						function($stateParams, Event) {
-							return Event.getEvent($stateParams.eventId);
-						}
-					]
-				}
-			});
+        $stateProvider
+            .state('events', {
+                url: '/agenda/',
+                controller: 'EventIndexController',
+                templateUrl: BASE_URI + 'views/events/index.html'
+            })
+            .state('events.filter', {
+                url: ':tag/:startDate/:endDate/:linguagem/:search/:space/:past/:page/'
+            })
+            .state('eventsSingle', {
+                url: '/agenda/:eventId/',
+                controller: 'EventSingleController',
+                templateUrl: BASE_URI + 'views/events/single.html',
+                resolve: {
+                    'EventData': [
+                        '$stateParams',
+                        'EventService',
+                        function($stateParams, Event) {
+                            return Event.getEvent($stateParams.eventId);
+                        }
+                    ]
+                }
+            });
 
-	}
+    }
 ])
 
 .factory('EventService', require('./EventService'))

@@ -3,63 +3,63 @@
 var BASE_URI = (new URL(document.baseURI)).pathname;
 
 module.exports = [
-	'$http',
-	'$q',
-	function($http, $q) {
+    '$http',
+    '$q',
+    function($http, $q) {
 
-		var load = function(perPage, page, cb) {
+        var load = function(perPage, page, cb) {
 
-			page = page || 1;
+            page = page || 1;
 
-			$http({
-				method: 'GET',
-				url: BASE_URI + 'api/social',
-				params: {
-					page: page,
-					perPage: perPage
-				}
-			}).success(function(data) {
-				cb(data);
-			});
+            $http({
+                method: 'GET',
+                url: BASE_URI + 'api/social',
+                params: {
+                    page: page,
+                    perPage: perPage
+                }
+            }).success(function(data) {
+                cb(data);
+            });
 
-		}
+        }
 
-		return {
+        return {
 
-			get: function(perPage) {
+            get: function(perPage) {
 
-				var deferred = $q.defer();
-				var totalPages;
-				var currentPage;
+                var deferred = $q.defer();
+                var totalPages;
+                var currentPage;
 
-				load(perPage, 1, function(data) {
+                load(perPage, 1, function(data) {
 
-					currentPage = data.pagination.currentPage;
-					totalPages = data.pagination.totalPages;
+                    currentPage = data.pagination.currentPage;
+                    totalPages = data.pagination.totalPages;
 
-					deferred.resolve({
-						data: data.data,
-						nextPage: function() {
-							var deferred = $q.defer();
-							if(currentPage == totalPages) {
-								deferred.resolve(false);
-							} else {
-								load(perPage, currentPage+1, function(data) {
-									currentPage = data.pagination.currentPage;
-									deferred.resolve(data);
-								});
-							}
-							return deferred.promise;
-						}
-					});
+                    deferred.resolve({
+                        data: data.data,
+                        nextPage: function() {
+                            var deferred = $q.defer();
+                            if(currentPage == totalPages) {
+                                deferred.resolve(false);
+                            } else {
+                                load(perPage, currentPage+1, function(data) {
+                                    currentPage = data.pagination.currentPage;
+                                    deferred.resolve(data);
+                                });
+                            }
+                            return deferred.promise;
+                        }
+                    });
 
-				});
+                });
 
-				return deferred.promise;
+                return deferred.promise;
 
-			}
+            }
 
-		}
+        }
 
 	}
 ];

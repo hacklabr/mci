@@ -1,18 +1,18 @@
 'use strict';
 
 module.exports = [
-	'PostData',
-	'$scope',
-	'$sce',
-	function(PostData, $scope, $sce) {
+    'PostData',
+    '$scope',
+    '$sce',
+    function(PostData, $scope, $sce) {
 
-		$scope.post = PostData;
+        $scope.post = PostData;
 
-		$scope.getContent = function(post) {
+        $scope.getContent = function(post) {
 
-			return $sce.trustAsHtml(post.content);
+            return $sce.trustAsHtml(post.content);
 
-		};
+        };
 
-	}
+    }
 ]
