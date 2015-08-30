@@ -1,6 +1,5 @@
 'use strict';
 
-var BASE_URI = (new URL(document.baseURI)).pathname;
 
 angular.module('mci.news', [
     'ui.router'

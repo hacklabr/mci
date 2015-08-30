@@ -1,7 +1,22 @@
 head
-    title Mês da Cultura Independente
-    meta(name="viewport" content="width=device-width,initial-scale=1.0")
+    title(ng-bind="metaservice.metaTitle()")
+    meta(name="viewport", content="width=device-width,initial-scale=1.0")
+    meta(name="fragment", content="!")
+    meta(name="description", content="{{ metaservice.metaDescription() }}")
+    meta(name="keywords", content="{{ metaservice.metaKeywords() }}")
+
+    meta(property="og:type",          content="website")
+    meta(property="og:title",         content="{{ metaservice.metaTitle() }}")
+    meta(property="og:description",   content="{{ metaservice.metaDescription() }}")
+    meta(property="og:url",           content="{{ metaservice.metaUrl() }}")
+    meta(property="og:image",         content="{{ metaservice.metaImage() }}")
+
     base(href= config.baseUri)
+    script(type="text/javascript")
+        | var BASE_URI = "!{config.baseUri}";
+
+    link(rel="shortcut icon", href=config.baseUri + 'img/favicon.ico' type="image/x-icon")
+    link(rel="icon", href=config.baseUri + 'img/favicon.ico' type="image/x-icon")
     link(rel='stylesheet', href= config.baseUri + 'css/base.css')
     link(rel='stylesheet', href= config.baseUri + 'css/skeleton.css')
     link(rel='stylesheet', href= config.baseUri + 'css/app.css')
