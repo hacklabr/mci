@@ -5,7 +5,7 @@ article.event-list-item
             .main-info
                 h3
                     a(href= config.baseUri+"agenda/{{event.id}}/") {{event.name}}
-                p.description(ng-show="event.shortDescription") {{event.shortDescription}}
+                p.description(ng-show="event.shortDescription") <strong>{{event.terms.linguagem.join(', ')}}</strong><br> {{event.shortDescription}}
         section.occurrences
             .occurrence.clearfix(ng-repeat="occur in event.occurrences | spaceOccurrences:space | byDateOccurrences:eventSearch.startDate:eventSearch.endDate | futureOccurrences:isFutureEvents")
                 .date-info(ng-class="{'showing-from-now': showFromNow(occur)}")

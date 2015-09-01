@@ -6,9 +6,41 @@ angular.module('mci.events')
     'EventService',
     function(Event) {
         return function(input, tag) {
-            if(tag) {
+            if(tag.length > 0) {
                 return _.filter(input, function(e) {
-                    return e.terms.tag && e.terms.tag.indexOf(tag) !== -1;
+                    if(!e.terms.tag){
+                        return false;
+                    }
+                    var has = false;
+                    e.terms.tag.forEach(function(l){
+                        if(tag.indexOf(l) >= 0){
+                            has = true;
+                        }
+                    });
+                    return has;
+                });
+            }
+            return input;
+        }
+    }
+])
+
+.filter('linguagemEvents', [
+    'EventService',
+    function(Event) {
+        return function(input, linguagem) {
+            if(linguagem.length > 0) {
+                return _.filter(input, function(e) {
+                    if(!e.terms.linguagem){
+                        return false;
+                    }
+                    var has = false;
+                    e.terms.linguagem.forEach(function(l){
+                        if(linguagem.indexOf(l) >= 0){
+                            has = true;
+                        }
+                    });
+                    return has;
                 });
             }
             return input;

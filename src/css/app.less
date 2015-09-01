@@ -95,7 +95,7 @@ body {
     width: 231px;
     padding: 40px 40px 0;
     //background: @bg;
-    background-image: url(../img/bg2.jpg);
+    background-image: url(../img/barra_v2.jpg);
     background-position: top left;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -189,7 +189,7 @@ body {
     margin-left: 271px;
     .box-sizing(border-box);
     padding: 40px 0;
-    background-image: url(../img/bg3.jpg);
+    background-image: url(../img/fundo.jpg);
     background-position: center right;
     background-repeat: repeat-y;
 }
@@ -366,6 +366,21 @@ body {
             width: 400px;
         }
     }
+    
+    .active-filters {
+        &--item {
+            display:inline-block;
+            border:1px solid #888;
+            background:white;
+            padding:2px 4px;
+            border-radius: 4px;
+            margin:2px;
+            
+            cursor: pointer;
+        }
+        
+    }
+    
     nav {
         float: right;
         ::-webkit-input-placeholder {
@@ -445,9 +460,6 @@ body {
             z-index: 1;
             min-width: 240px;
             overflow: hidden;
-            &.filled {
-                padding: 38px 0 0;
-            }
             &:after {
                 content: '\E75C';
                 position: absolute;
@@ -473,8 +485,7 @@ body {
                     font-family: "Axis";
                     font-size: 12px;
                     text-transform: uppercase;
-                    a,
-                    &.label {
+                    a, &.label {
                         display: block;
                         padding: 0 15px;
                         border-left: 1px solid rgba(0,0,0,0.2);
@@ -483,16 +494,32 @@ body {
                         background: @bg;
                         text-decoration: none;
                     }
-                    &.active {
-                        position: absolute;
-                        top: 2px;
-                        left: 2px;
-                        display: block;
-                        a,
-                        &.label {
-                            border: 0;
+                    &:hover{
+                        a, &.label {
+                            background:#3db1b1;
                         }
                     }
+                    
+                    &.active {
+                        a, &.label {
+                            background:#3db1b1;
+                            border: 0;
+                            color:white;
+                            
+                            .entypo {
+                                float:right;
+                            }
+                        }
+                    } 
+                    
+                    &.inactive {
+                        a, &.label {
+                            .entypo {
+                                display:none;
+                            }
+                        }
+                    }
+                    
                     &.inactive:last-child {
                         border-bottom: 1px solid rgba(0,0,0,0.2);
                     }

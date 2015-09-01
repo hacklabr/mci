@@ -12,8 +12,49 @@ module.exports = [
         $scope.service = Event;
 
         $scope.events = Event.getEvents();
-
+        
         $scope.spaces = Event.getSpaces();
+        
+        $scope.activeFilters = {
+            'linguagem': [],
+            'tag': [],
+            'space': []
+        };
+        
+        
+        $scope.hasFilter = function(type, value){
+            if (type != 'linguagem' && type != 'tag' && type != 'space') {
+                return false;
+            }
+            
+            return $scope.activeFilters[type].indexOf(value) >= 0;
+        };
+        
+        $scope.toggleFilter = function(type, value){
+            if (type != 'linguagem' && type != 'tag' && type != 'space') {
+                return false;
+            }
+            
+            if (!$scope.hasFilter(type, value)) {
+                $scope.activeFilters[type].push(value);
+            } else {
+                var index = $scope.activeFilters[type].indexOf(value);
+                $scope.activeFilters[type].splice(index,1);
+            }
+            
+            
+            $scope.toggleFeatured();
+            
+            return true;
+        };
+        
+        $scope.toggleFeatured = function(){
+            if($scope.activeFilters.linguagem.length === 0 && $scope.activeFilters.tag.length === 0 && $scope.activeFilters.space.length === 0 && !$scope.eventSearch.$){
+                $('#highlight-event').slideDown('fast',function(){$(this).animate({opacity:1},'fast')});
+            }else{
+                $('#highlight-event').animate({opacity:0},'fast',function(){$(this).slideUp('fast')});
+            }
+        };
 
         // update space data
         _.each($scope.spaces, function(space) {
@@ -26,7 +67,8 @@ module.exports = [
 
         $scope.linguagens = Event.getTaxTerms('linguagem');
         $scope.tags = Event.getTaxTerms('tag');
-
+        
+        
         /*
          * NAVIGATION
          */
