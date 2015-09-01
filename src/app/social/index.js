@@ -3,31 +3,31 @@
 var BASE_URI = (new URL(document.baseURI)).pathname;
 
 angular.module('mci.social', [
-	'ui.router',
-	'infinite-scroll',
-	'wu.masonry',
-	'ngDialog'
+    'ui.router',
+    'infinite-scroll',
+    'wu.masonry',
+    'ngDialog'
 ])
 .config([
-	'$stateProvider',
-	function($stateProvider) {
+    '$stateProvider',
+    function($stateProvider) {
 
-		$stateProvider
-			.state('social', {
-				url: '/na-rede/',
-				controller: 'SocialController',
-				templateUrl: BASE_URI + 'views/social/index.html',
-				resolve: {
-					'SocialData': [
-						'SocialService',
-						function(Social) {
-							return Social.get(20);
-						}
-					]
-				}
-			});
+        $stateProvider
+            .state('social', {
+                url: '/na-rede/',
+                controller: 'SocialController',
+                templateUrl: BASE_URI + 'views/social/index.html',
+                resolve: {
+                    'SocialData': [
+                        'SocialService',
+                        function(Social) {
+                            return Social.get(20);
+                        }
+                    ]
+                }
+            });
 
-	}
+    }
 ])
 .factory('SocialService', require('./SocialService'))
 .controller('SocialController', require('./SocialController'));

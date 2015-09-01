@@ -1,10 +1,10 @@
 #linguagens.box-section(ng-show="linguagens")
 
-	header.box-section-header.linguagens-header.clearfix
-		h2 Linguagens
+    header.box-section-header.linguagens-header.clearfix
+        h2 Linguagens
 
-	section.box-section-content.linguagens-content
+    section.box-section-content.linguagens-content
 
-		ul.linguagem-list.clearfix(ng-controller="EventController")
-			li(ng-repeat="linguagem in linguagens")
-				a(href="javascript:void(0);" ng-click="accessLinguagem(linguagem)") {{linguagem}}
+        ul.linguagem-list.clearfix(ng-controller="EventController")
+            li(ng-repeat="linguagem in linguagens")
+                a(href="javascript:void(0);" ng-click="accessLinguagem(linguagem)") {{linguagem}}

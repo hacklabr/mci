@@ -1,37 +1,37 @@
 section#list-event(ng-class="{tag: tag}")
-	.ui-view
-	header.list-header.main-header.clearfix
-		.clearfix
-			h2(ng-show="tag || space")
-				a(href= config.baseUri+"agenda/") Agenda
-			h1
-				span(ng-hide="tag || space") Agenda
-				span.tag(ng-show="tag || space") {{tag || space.name}}
-			include partials/filters
-		.clearfix
-			p(ng-show="tag") {{service.getTagDescription(tag)}}
+    .ui-view
+    header.list-header.main-header.clearfix
+        .clearfix
+            h2(ng-show="tag || space")
+                a(href= config.baseUri+"agenda/") Agenda
+            h1
+                span(ng-hide="tag || space") Agenda
+                span.tag(ng-show="tag || space") {{tag || space.name}}
+            include partials/filters
+        .clearfix
+            p(ng-show="tag") {{service.getTagDescription(tag)}}
 
-	section#event-list.main-content
-		section.event-results(ng-show="isEventFiltering() || tag || space")
+    section#event-list.main-content
+        section.event-results(ng-show="isEventFiltering() || tag || space")
 
-			ul.event-list(ng-show="filteredEvents.length")
-				li.clearfix(ng-repeat="event in (filteredEvents = (events | filter:eventFilter.$ | tagEvents:tag | spaceEvents:space | futureEvents:isFutureEvents | byDateEvents:eventSearch.startDate:eventSearch.endDate)) | offset:eventNav.perPage * eventNav.curPage | limitTo:eventNav.perPage" ng-controller="EventController" ng-click="accessEvent(event)")
-					include partials/event-list-item
+            ul.event-list(ng-show="filteredEvents.length")
+                li.clearfix(ng-repeat="event in (filteredEvents = (events | filter:eventFilter.$ | tagEvents:tag | spaceEvents:space | futureEvents:isFutureEvents | byDateEvents:eventSearch.startDate:eventSearch.endDate)) | offset:eventNav.perPage * eventNav.curPage | limitTo:eventNav.perPage" ng-controller="EventController" ng-click="accessEvent(event)")
+                    include partials/event-list-item
 
-			p.not-found(ng-hide="filteredEvents.length") Nenhum evento foi encontrado
+            p.not-found(ng-hide="filteredEvents.length") Nenhum evento foi encontrado
 
-			nav#pagination.clearfix(ng-show="filteredEvents.length")
-				a.prev(ng-click="eventNav.prevPage()" ng-show="eventNav.hasPrevPage()" href="javascript:void(0);")
-					| página anterior
-					.entypo &#59233;
-				a.next(ng-click="eventNav.nextPage()" ng-show="eventNav.hasNextPage()" href="javascript:void(0);")
-					| próxima página
-					.entypo &#59234;
+            nav#pagination.clearfix(ng-show="filteredEvents.length")
+                a.prev(ng-click="eventNav.prevPage()" ng-show="eventNav.hasPrevPage()" href="javascript:void(0);")
+                    | página anterior
+                    .entypo &#59233;
+                a.next(ng-click="eventNav.nextPage()" ng-show="eventNav.hasNextPage()" href="javascript:void(0);")
+                    | próxima página
+                    .entypo &#59234;
 
-		include partials/featured
+        include partials/featured
 
-//		.below.clearfix
+//        .below.clearfix
 //
-//			include partials/spaces
-//			include partials/linguagens
-//			include partials/tags
+//            include partials/spaces
+//            include partials/linguagens
+//            include partials/tags
