@@ -12,34 +12,6 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
-        .ball {
-            background-color: white;
-            box-shadow: 0 0 10px gray;
-            display: inline-block;
-            height: 12rem;
-            width: 12rem;
-            text-align: center;
-            border: 3px double gray;
-            border-radius: 60px;
-            padding-top: 1rem;
-        }
-        .ball .value,
-        .ball .label {
-            display: block;
-            padding: 0;
-        }
-
-        .ball .value {
-            font-weight: normal;
-            font-size: 4.5rem;
-            vertical-align: bottom;
-        }
-
-        .ball .label {
-            color: #666;
-            font-weight: normal;
-            font-size: 2rem;
-        }
 
         section {
             padding-top: 2em;
@@ -52,32 +24,6 @@
             color: #666;
         }
     </style>
-    <script type="text/javascript">
-
-    window.addEventListener('load', function() {
-        var END = new Date('2015-09-01');
-
-        var s = 1000;
-        var m = s * 60;
-        var h = m * 60;
-        var d = h * 24;
-
-        var d_el = document.getElementById('d_el');
-        var h_el = document.getElementById('h_el');
-        var m_el = document.getElementById('m_el');
-        var s_el = document.getElementById('s_el');
-
-        function update_countdown() {
-            var delta = END - (new Date());
-            d_el.innerHTML = Math.floor(delta / d);
-            h_el.innerHTML = Math.floor((delta % d) / h);
-            m_el.innerHTML = Math.floor((delta % h) / m);
-            s_el.innerHTML = Math.floor((delta % m) / s);
-        }
-        update_countdown();
-        setInterval(update_countdown, 1000);
-    });
-    </script>
 </head>
 <body>
     <div class="container">
@@ -92,27 +38,6 @@
             <p class="text text-center col-sm-4 col-sm-push-4">
                 Em breve um mês de shows, exposições, histórias em quadrinhos, literatura e cinema.
             </p>
-        </section>
-        
-        <section>
-            <div class="row text-center">
-                <div class="ball">
-                    <span class="value" id="d_el"></span>
-                    <span class="label">dias</span>
-                </div>
-                <div class="ball">
-                    <span class="value" id="h_el"></span>
-                    <span class="label">horas</span>
-                </div>
-                <div class="ball">
-                    <span class="value" id="m_el"></span>
-                    <span class="label">minutos</span>
-                </div>
-                <div class="ball">
-                    <span class="value" id="s_el"></span>
-                    <span class="label">segundos</span>
-                </div>
-            </div>
         </section>
     </div>
 </body>

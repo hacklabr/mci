@@ -1,3 +1,5 @@
+[![Build Status](https://codeship.com/projects/8df1e510-33a5-0133-f545-32e25a7c007a/status?branch=master)](https://codeship.com/projects/100282)
+
 # Visualização da Cultura Independente
 
 Visualização de eventos cadastrados no [Mapas Culturais](https://github.com/hacklabr/mapasculturais), desenvolvido para a plataforma [SP Cultura](http://spcultura.prefeitura.sp.gov.br/) da [Secretaria Municipal de Cultura de São Paulo](http://www.prefeitura.sp.gov.br/cidade/secretarias/cultura/).

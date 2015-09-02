@@ -9,7 +9,7 @@
     "author": "Miguel Peixe <miguel@cardume.art.br>",
     "scripts": {
         "install": "./node_modules/.bin/napa",
-        "postinstall": "mkdir -p dist/data && ./node_modules/grunt-cli/bin/grunt build",
+        "postinstall": "mkdir -p dist/data && cp -n config.js.sample config.js && ./node_modules/grunt-cli/bin/grunt build",
         "start": "node app.js"
     },
     "dependencies": {
