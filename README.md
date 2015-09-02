@@ -1,4 +1,4 @@
-[![Build Status](https://codeship.com/projects/8df1e510-33a5-0133-f545-32e25a7c007a/status?branch=master)](https://codeship.com/projects/100282)
+[![Build Status](https://codeship.com/projects/8df1e510-33a5-0133-f545-32e25a7c007a/status?branch=ed2015)](https://codeship.com/projects/100282)
 
 # Visualização da Cultura Independente
 
