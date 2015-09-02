@@ -7,6 +7,7 @@ var fs = require('fs'),
     config = require('../config'),
     loadData = require('./data'),
     loadSocial = require('./social');
+    logger = require('./logger');
 
 var dev = false;
 
@@ -16,7 +17,7 @@ var dev = false;
 
 var eventsData;
 
-console.log('Downloading data...');
+logger.log('Data download started');
 loadData(function(data) {
     eventsData = data;
     init();
@@ -27,13 +28,14 @@ loadData(function(data) {
  */
 
 function init() {
-
+    logger.log('Starting app ...')
     /*
      * Download data each 10 minutes
      */
     if(!dev) {
         setInterval(function() {
             loadData(function(data) {
+                logger.log('Updating data')
                 eventsData = data;
             });
         }, 1000 * 60 * 10);
@@ -45,6 +47,7 @@ function init() {
     app.use(require('compression')());
     app.set('view engine', 'jade');
     app.set('views', __dirname + '/../src/views/');
+    logger.log('Set views to ', fs.realpathSync(__dirname + '/../src/views/'));
 
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
@@ -57,8 +60,10 @@ function init() {
 
     app.get('/api/news', function(req, res) {
 
-        if(!config.wpUrl)
+        if(!config.wpUrl){
+            logger.error('WordPress API not defined');
             res.status(404).send('WordPress API not defined');
+        }
 
         request({
             url: config.wpUrl + '/wp-json/posts',
@@ -251,6 +256,7 @@ function init() {
         });
         if(!dev) {
             setInterval(function() {
+                logger.log('Updating social content');
                 loadSocial(function(data) {
                     social = data;
                 });
@@ -288,6 +294,6 @@ function init() {
 
     app.listen(port);
 
-    console.log('App started on port ' + port);
+    logger.log('App started on port ' + port);
 
 }

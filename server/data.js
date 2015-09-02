@@ -4,6 +4,7 @@ var fs = require('fs'),
     request = require('request'),
     _ = require('underscore'),
     moment = require('moment'),
+    logger = require('./logger'),
     tryJSON = require('../lib/tryParseJSON'),
     config = require('../config');
 
@@ -23,19 +24,19 @@ module.exports = function(cb) {
             'project': 'in(@Project:' + config.projectId + ')'
         }
     };
-
+    
     request(_.extend(defaultReq, eventsReq), function(err, res, body) {
         if(err) {
-            console.log(err);
+            logger.err(err);
         } else {
-
             var events = tryJSON(body);
 
-            if(!events)
-                return false;
-
-            if(!events.length)
-                throw new Error('This project has no events');
+            if(!events || !events.length) {
+                logger.error('This project has no events');
+                events = [];
+            } else {
+                logger.log('Downloaded', body.length, 'bytes,', events.length, 'events');
+            }
 
             var eventIds = [];
 
