@@ -455,10 +455,10 @@ body {
             }
         }
         .list-filter {
-            padding: 38px 0 0;
+            padding: 0;
             position: relative;
             z-index: 1;
-            min-width: 240px;
+            width: 240px;
             overflow: hidden;
             &:after {
                 content: '\E75C';
@@ -475,23 +475,58 @@ body {
                     display: block;
                 }
             }
+            
+            &.space {
+                input {
+                    display:block;
+                    width:100%;
+                }
+                &:hover {
+                    input {
+                        display:block;
+                    }
+                    
+                    span.label {
+                        display:none;
+                    }
+                }
+                
+                
+                .hidden {
+                    display: none;
+                }
+            }
+            
             ul {
                 margin: 0;
                 padding: 0;
+                position:absolute;
+                right:0;
+                
+                background:#ddd;
+                
+                max-height: 450px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                
                 li {
+                    
                     display: none;
                     margin: 0 -1px;
                     cursor: default;
                     font-family: "Axis";
                     font-size: 12px;
                     text-transform: uppercase;
+                    
+                    white-space:nowrap;
+                    
                     a, &.label {
                         display: block;
-                        padding: 0 15px;
+                        padding: 0 45px 0 15px;
                         border-left: 1px solid rgba(0,0,0,0.2);
                         border-right: 1px solid rgba(0,0,0,0.2);
                         line-height: 38px;
-                        background: @bg;
+/*                        background: @bg;*/
                         text-decoration: none;
                     }
                     &:hover{
@@ -506,17 +541,17 @@ body {
                             border: 0;
                             color:white;
                             
-                            .entypo {
-                                float:right;
-                            }
+                        }
+                        .entypo {
+                            color:white;
+                            float:right;
+                            line-height: 38px;
                         }
                     } 
                     
                     &.inactive {
-                        a, &.label {
-                            .entypo {
-                                display:none;
-                            }
+                        .entypo {
+                            display:none;
                         }
                     }
                     
