@@ -69,6 +69,10 @@ module.exports = [
         $scope.tags = Event.getTaxTerms('tag');
         
         
+        $scope.focusSpaceSearch = function(){
+            document.getElementById('space-search').focus();
+        }
+        
         /*
          * NAVIGATION
          */
