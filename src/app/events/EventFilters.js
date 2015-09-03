@@ -19,9 +19,23 @@ angular.module('mci.events')
                     });
                     return has;
                 });
+            };
+            return input;
+        };
+    }
+])
+
+.filter('projectEvents', [
+    'EventService',
+    function(Event) {
+        return function(input, selectedProjects) {
+            if(selectedProjects.length > 0) {
+                return _.filter(input, function(e) {
+                    return selectedProjects.indexOf(e.projectName) >= 0;
+                });
             }
             return input;
-        }
+        };
     }
 ])
 
@@ -44,7 +58,7 @@ angular.module('mci.events')
                 });
             }
             return input;
-        }
+        };
     }
 ])
 
