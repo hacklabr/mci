@@ -19,9 +19,23 @@ angular.module('mci.events')
                     });
                     return has;
                 });
+            };
+            return input;
+        };
+    }
+])
+
+.filter('projectEvents', [
+    'EventService',
+    function(Event) {
+        return function(input, selectedProjects) {
+            if(selectedProjects.length > 0) {
+                return _.filter(input, function(e) {
+                    return selectedProjects.indexOf(e.projectName) >= 0;
+                });
             }
             return input;
-        }
+        };
     }
 ])
 
@@ -44,24 +58,55 @@ angular.module('mci.events')
                 });
             }
             return input;
-        }
+        };
     }
 ])
 
 .filter('spaceEvents', [
     'EventService',
     function(Event) {
-        return function(input, space) {
-            if(space && space.id) {
+        return function(input, spaces) {
+            if(spaces.length) {
                 return _.filter(input, function(e) {
                     var occurrences = _.filter(e.occurrences, function(occur) {
                         var occurSpace = Event.getOccurrenceSpace(occur);
-                        if(occurSpace && occurSpace.id == space.id) {
-                            return true;
+                        var has = false;
+                        
+                        if(occurSpace){
+                            spaces.forEach(function(id){
+                                if(id == occurSpace.id){
+                                    has = true;
+                                }
+                            });
                         }
-                        return false;
+                        
+                        return has;
                     });
                     return occurrences.length;
+                });
+            }
+            return input;
+        }
+    }
+])
+
+
+.filter('spaceOccurrences', [
+    'EventService',
+    function(Event) {
+        return function(input, linguagem) {
+            if(linguagem.length > 0) {
+                return _.filter(input, function(e) {
+                    if(!e.terms.linguagem){
+                        return false;
+                    }
+                    var has = false;
+                    e.terms.linguagem.forEach(function(l){
+                        if(linguagem.indexOf(l) >= 0){
+                            has = true;
+                        }
+                    });
+                    return has;
                 });
             }
             return input;

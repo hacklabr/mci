@@ -7,23 +7,89 @@ module.exports = [
     '$state',
     'EventService',
     '$scope',
-    function($q, $interval, $timeout, $state, Event, $scope) {
+    '$filter',
+    function($q, $interval, $timeout, $state, Event, $scope, $filter) {
 
         $scope.service = Event;
 
-        $scope.events = Event.getEvents();
+        var _events = Event.getEvents();
+        
+        $scope.events = {};
+        $scope.projects = [];
+        
+        // fake project names
+        _events.forEach(function(e){
+            console.log(e);
+            e.projectName = e.project ? e.project.name : 'Sem Projeto';
+        });
+        
+        // sort events by project name
+        _events = _events.sort(function(e1, e2){
+            if (e1.projectName > e2.projectName) {
+                return 1;
+            } else if (e1.projectName < e2.projectName) {
+                return -1
+            } else {
+                return 0;
+            }
+        });
+        
+        _events.forEach(function(e) {
+            if($scope.projects.indexOf(e.projectName) < 0){
+                $scope.projects.push(e.projectName);
+            }
+        });
+        
         
         $scope.spaces = Event.getSpaces();
         
         $scope.activeFilters = {
             'linguagem': [],
-            'tag': [],
-            'space': []
+            'project': [],
+            'space': [],
+            'keyword': ''
+        };
+        
+        var updateEventsTimeout;
+        
+        function updateEvents(){
+            var events = _events;
+            events = $filter('projectEvents')(events, $scope.activeFilters.project);
+            events = $filter('linguagemEvents')(events, $scope.activeFilters.linguagem);
+            events = $filter('spaceEvents')(events, $scope.activeFilters.space);
+            events = $filter('filter')(events, $scope.activeFilters.keyword);
+            $scope.events = {};
+            events.forEach(function(e) {
+                if (!$scope.events[e.projectName]) {
+                    $scope.events[e.projectName] = [];
+                }
+
+                $scope.events[e.projectName].push(e);
+            });
+            
+            $scope.toggleFeatured();
+        }
+        
+        $scope.isFiltering = function(){
+            return  $scope.activeFilters.linguagem.length || 
+                    $scope.activeFilters.project.length ||
+                    $scope.activeFilters.space.length ||
+                    $scope.activeFilters.keyword;
+                    
+        };
+        
+        $scope.clearFilters = function(){
+            $scope.activeFilters = {
+                'linguagem': [],
+                'project': [],
+                'space': [],
+                'keyword': ''
+            };
         };
         
         
         $scope.hasFilter = function(type, value){
-            if (type != 'linguagem' && type != 'tag' && type != 'space') {
+            if (type != 'linguagem' && type != 'project' && type != 'space') {
                 return false;
             }
             
@@ -31,7 +97,7 @@ module.exports = [
         };
         
         $scope.toggleFilter = function(type, value){
-            if (type != 'linguagem' && type != 'tag' && type != 'space') {
+            if (type != 'linguagem' && type != 'project' && type != 'space') {
                 return false;
             }
             
@@ -42,20 +108,21 @@ module.exports = [
                 $scope.activeFilters[type].splice(index,1);
             }
             
-            
-            $scope.toggleFeatured();
-            
             return true;
         };
         
         $scope.toggleFeatured = function(){
-            if($scope.activeFilters.linguagem.length === 0 && $scope.activeFilters.tag.length === 0 && $scope.activeFilters.space.length === 0 && !$scope.eventSearch.$){
+            if($scope.activeFilters.linguagem.length === 0 && $scope.activeFilters.project.length === 0 && $scope.activeFilters.space.length === 0 && !$scope.activeFilters.keyword){
                 $('#highlight-event').slideDown('fast',function(){$(this).animate({opacity:1},'fast')});
             }else{
                 $('#highlight-event').animate({opacity:0},'fast',function(){$(this).slideUp('fast')});
             }
         };
-
+        
+        updateEvents();
+        
+        $scope.$watch('activeFilters', updateEvents, true);
+        
         // update space data
         _.each($scope.spaces, function(space) {
             space.events = angular.copy(_.filter($scope.events, function(e) {
@@ -68,6 +135,10 @@ module.exports = [
         $scope.linguagens = Event.getTaxTerms('linguagem');
         $scope.tags = Event.getTaxTerms('tag');
         
+        
+        $scope.focusSpaceSearch = function(){
+            document.getElementById('space-search').focus();
+        };
         
         /*
          * NAVIGATION
