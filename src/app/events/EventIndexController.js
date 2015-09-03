@@ -19,7 +19,8 @@ module.exports = [
         
         // fake project names
         _events.forEach(function(e){
-            e.projectName = e.terms.tag[0] ? e.terms.tag[0] : 'Sem Projeto';
+            console.log(e);
+            e.projectName = e.project ? e.project.name : 'Sem Projeto';
         });
         
         // sort events by project name
