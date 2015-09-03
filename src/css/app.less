@@ -504,11 +504,15 @@ body {
                 position:absolute;
                 right:0;
                 
-                background:#ddd;
+                background:@bg;
                 
                 max-height: 450px;
+                min-width: 240px;
                 overflow-y: auto;
                 overflow-x: hidden;
+                
+                border: 1px solid #aaa;
+                border-top:0;
                 
                 li {
                     
@@ -527,7 +531,7 @@ body {
                         border-left: 1px solid rgba(0,0,0,0.2);
                         border-right: 1px solid rgba(0,0,0,0.2);
                         line-height: 38px;
-/*                        background: @bg;*/
+                        background: @bg;
                         text-decoration: none;
                     }
                     &:hover{

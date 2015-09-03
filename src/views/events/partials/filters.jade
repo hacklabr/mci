@@ -47,7 +47,7 @@ nav
                         
         .filter-item.list-filter.space(ng-mouseleave="spaceSearch.name = ''" ng-mouseenter="focusSpaceSearch()")
             span.label Filtre por espaço
-            input(id='space-search' type="text" ng-model="spaceSearch.name" placeholder="Busque por um espaço...")
+            input(id='space-search' type="text" ng-model="spaceSearch.name" placeholder="Busca")
             ul.space-list
                 li(ng-repeat="space in spaces" ng-class="{active: hasFilter('space', space.id), inactive: !hasFilter('space', space.id), hidden: spaceSearch.name && space.name.toLowerCase().indexOf(spaceSearch.name.toLowerCase()) === -1}")
                     span.entypo(href="javascript:void(0)") &#10006;
