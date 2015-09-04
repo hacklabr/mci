@@ -9,6 +9,7 @@ require('angular-leaflet/dist/angular-leaflet-directive');
 require('angular-masonry/angular-masonry');
 require('angular-dialog/js/ngDialog');
 require('angular-infiniteScroll/build/ng-infinite-scroll');
+require('angular-simple-logger');
 
 window.moment = require('moment');
 require('moment/locale/pt-br');
