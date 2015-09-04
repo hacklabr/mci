@@ -174,6 +174,8 @@ angular.module('mci.events')
                 to = to || from;
                 from = moment(from).unix();
                 to = moment(to).add('days', 1).unix();
+                
+                console.log(from, to);
                 return _.filter(input, function(e) {
                     var occurrences = _.filter(e.occurrences, function(occur) {
                         return occur.timestamp <= to && occur.timestamp >= from;

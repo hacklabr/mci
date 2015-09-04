@@ -9,17 +9,27 @@ module.exports = [
     '$scope',
     '$filter',
     function($q, $interval, $timeout, $state, Event, $scope, $filter) {
+        var _events = Event.getEvents();
+        
+        var _filterModel = {
+            'startDate': null,
+            'endDate': null,
+            'linguagem': [],
+            'project': [],
+            'space': [],
+            'keyword': ''
+        };
 
         $scope.service = Event;
 
-        var _events = Event.getEvents();
-        
         $scope.events = {};
         $scope.projects = [];
+        $scope.spaces = Event.getSpaces();
+        
+        $scope.filters = angular.copy(_filterModel);
         
         // fake project names
         _events.forEach(function(e){
-            console.log(e);
             e.projectName = e.project ? e.project.name : 'Sem Projeto';
         });
         
@@ -28,7 +38,7 @@ module.exports = [
             if (e1.projectName > e2.projectName) {
                 return 1;
             } else if (e1.projectName < e2.projectName) {
-                return -1
+                return -1;
             } else {
                 return 0;
             }
@@ -40,24 +50,17 @@ module.exports = [
             }
         });
         
-        
-        $scope.spaces = Event.getSpaces();
-        
-        $scope.activeFilters = {
-            'linguagem': [],
-            'project': [],
-            'space': [],
-            'keyword': ''
-        };
-        
-        var updateEventsTimeout;
-        
         function updateEvents(){
             var events = _events;
-            events = $filter('projectEvents')(events, $scope.activeFilters.project);
-            events = $filter('linguagemEvents')(events, $scope.activeFilters.linguagem);
-            events = $filter('spaceEvents')(events, $scope.activeFilters.space);
-            events = $filter('filter')(events, $scope.activeFilters.keyword);
+            events = $filter('projectEvents')(events, $scope.filters.project);
+            events = $filter('linguagemEvents')(events, $scope.filters.linguagem);
+            events = $filter('spaceEvents')(events, $scope.filters.space);
+            events = $filter('filter')(events, $scope.filters.keyword);
+            
+            if($scope.filters.startDate){
+                events = $filter('byDateEvents')(events, $scope.filters.startDate, $scope.filters.endDate);
+            }
+            
             $scope.events = {};
             events.forEach(function(e) {
                 if (!$scope.events[e.projectName]) {
@@ -71,20 +74,16 @@ module.exports = [
         }
         
         $scope.isFiltering = function(){
-            return  $scope.activeFilters.linguagem.length || 
-                    $scope.activeFilters.project.length ||
-                    $scope.activeFilters.space.length ||
-                    $scope.activeFilters.keyword;
+            return  $scope.filters.startDate ||
+                    $scope.filters.linguagem.length ||
+                    $scope.filters.project.length ||
+                    $scope.filters.space.length ||
+                    $scope.filters.keyword;
                     
         };
         
         $scope.clearFilters = function(){
-            $scope.activeFilters = {
-                'linguagem': [],
-                'project': [],
-                'space': [],
-                'keyword': ''
-            };
+            $scope.filters = angular.copy(_filterModel);
         };
         
         
@@ -93,7 +92,7 @@ module.exports = [
                 return false;
             }
             
-            return $scope.activeFilters[type].indexOf(value) >= 0;
+            return $scope.filters[type].indexOf(value) >= 0;
         };
         
         $scope.toggleFilter = function(type, value){
@@ -102,26 +101,26 @@ module.exports = [
             }
             
             if (!$scope.hasFilter(type, value)) {
-                $scope.activeFilters[type].push(value);
+                $scope.filters[type].push(value);
             } else {
-                var index = $scope.activeFilters[type].indexOf(value);
-                $scope.activeFilters[type].splice(index,1);
+                var index = $scope.filters[type].indexOf(value);
+                $scope.filters[type].splice(index,1);
             }
             
             return true;
         };
         
         $scope.toggleFeatured = function(){
-            if($scope.activeFilters.linguagem.length === 0 && $scope.activeFilters.project.length === 0 && $scope.activeFilters.space.length === 0 && !$scope.activeFilters.keyword){
-                $('#highlight-event').slideDown('fast',function(){$(this).animate({opacity:1},'fast')});
-            }else{
+            if($scope.isFiltering()){
                 $('#highlight-event').animate({opacity:0},'fast',function(){$(this).slideUp('fast')});
+            }else{
+                $('#highlight-event').slideDown('fast',function(){$(this).animate({opacity:1},'fast')});
             }
         };
         
         updateEvents();
         
-        $scope.$watch('activeFilters', updateEvents, true);
+        $scope.$watch('filters', updateEvents, true);
         
         // update space data
         _.each($scope.spaces, function(space) {
@@ -248,8 +247,8 @@ module.exports = [
         $scope.datepicker = {
             format: 'dd/MM/yyyy',
             clear: function() {
-                $scope.eventSearch.startDate = '';
-                $scope.eventSearch.endDate = '';
+                $scope.filters.startDate = '';
+                $scope.filters.endDate = '';
             },
             start: {
                 minDate: occurrences[0].moment.format('YYYY-MM-DD'),
@@ -266,7 +265,7 @@ module.exports = [
             end: {
                 maxDate: occurrences[occurrences.length-1].moment.format('YYYY-MM-DD'),
                 setMinDate: function() {
-                    $scope.datepicker.end.minDate = moment($scope.eventSearch.startDate).add('days', 1).format('YYYY-MM-DD');
+                    $scope.datepicker.end.minDate = moment($scope.filters.startDate).add('days', 1).format('YYYY-MM-DD');
                 },
                 toggle: function(off) {
                     $scope.datepicker.start.opened = false;
@@ -279,24 +278,18 @@ module.exports = [
             }
         };
 
-        $scope.$watch('eventSearch.startDate', function(date, prevDate) {
+        $scope.$watch('filters.startDate', function(date, prevDate) {
             $scope.datepicker.start.toggle(true);
             $scope.datepicker.start.view = moment(date).format('DD/MM');
-            if($scope.eventSearch.endDate && date > $scope.eventSearch.endDate) {
-                $scope.eventSearch.endDate = '';
+            if($scope.filters.endDate && date > $scope.filters.endDate) {
+                $scope.filters.endDate = '';
             }
             $scope.datepicker.end.setMinDate();
-            if(date || prevDate) {
-                $state.go('events.filter', {startDate: date});
-            }
         });
 
-        $scope.$watch('eventSearch.endDate', function(date, prevDate) {
+        $scope.$watch('filters.endDate', function(date, prevDate) {
             $scope.datepicker.end.toggle(true);
             $scope.datepicker.end.view = moment(date).format('DD/MM');
-            if(date || prevDate) {
-                $state.go('events.filter', {endDate: date});
-            }
         });
 
         /*

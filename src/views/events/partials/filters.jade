@@ -2,9 +2,9 @@ nav
 
     .filters-container
 
-        .filter-item.date-filter(ng-class="{filled:eventSearch.startDate}")
+        .filter-item.date-filter(ng-class="{filled:filters.startDate}" style="z-index:1005")
 
-            a.clear-filter(href="javascript:void(0)" ng-click="datepicker.clear()" title="Limpar filtro por data" ng-show="eventSearch.startDate") &#10060;
+            a.clear-filter(href="javascript:void(0)" ng-click="datepicker.clear()" title="Limpar filtro por data" ng-if="filters.startDate") &#10060;
 
             .date-filter-content
 
@@ -12,53 +12,57 @@ nav
 
                     a.button(ng-click="datepicker.start.toggle()" href="javascript:void(0);")
                         span.entypo &#128197;
-                        span.the-date(ng-show="eventSearch.startDate") {{datepicker.start.view}} 
+                        span.the-date(ng-show="filters.startDate") {{datepicker.start.view}} 
                         
-                    span.until(ng-show="eventSearch.startDate") até
+                    span.until(ng-show="filters.startDate") até
 
-                    .datepicker(pickadate ng-model="eventSearch.startDate" ng-show="datepicker.start.opened" min-date="datepicker.start.minDate" max-date="datepicker.start.maxDate" default-date="datepicker.start.minDate" prev-label="'anterior'" next-label="'próximo'")
+                    .datepicker(pickadate ng-model="filters.startDate" ng-show="datepicker.start.opened" min-date="datepicker.start.minDate" max-date="datepicker.start.maxDate" default-date="datepicker.start.minDate" prev-label="'anterior'" next-label="'próximo'")
 
-                .date-end.datepicker-container(ng-show="eventSearch.startDate")
+                .date-end.datepicker-container(ng-show="filters.startDate")
 
                     a.button(ng-click="datepicker.end.toggle()" href="javascript:void(0);")
                         span.entypo &#128197;
-                        span.the-date(ng-show="eventSearch.endDate") {{datepicker.end.view}}
-                        span.the-date(ng-hide="eventSearch.endDate") {{datepicker.start.view}}
+                        span.the-date(ng-show="filters.endDate") {{datepicker.end.view}}
+                        span.the-date(ng-hide="filters.endDate") {{datepicker.start.view}}
 
-                    .datepicker(pickadate ng-model="eventSearch.endDate" ng-show="datepicker.end.opened" min-date="datepicker.end.minDate" max-date="datepicker.end.maxDate" default-date="eventSearch.startDate" prev-label="'anterior'" next-label="'próximo'")
+                    .datepicker(pickadate ng-model="filters.endDate" ng-show="datepicker.end.opened" min-date="datepicker.end.minDate" max-date="datepicker.end.maxDate" default-date="filters.startDate" prev-label="'anterior'" next-label="'próximo'")
 
-        .filter-item.list-filter
+        .filter-item.list-filter(style="z-index:1004")
+            a.clear-filter(href="javascript:void(0)" ng-click="filters.linguagem = []" title="Limpar filtro por linguagem" ng-if="filters.linguagem.length > 0") &#10060;
             span.label Filtre por linguagens
             ul.linguagem-list
                 li(ng-repeat="linguagem in linguagens" ng-class="{active: hasFilter('linguagem', linguagem), inactive: !hasFilter('linguagem', linguagem)}")
                     span.entypo(href="javascript:void(0)") &#10006;
                     a(href="javascript:void(0);" ng-click="toggleFilter('linguagem', linguagem)") 
-                         {{linguagem}}
+                        |{{linguagem}}
                     
                     
-        .filter-item.list-filter
+        .filter-item.list-filter(style="z-index:1003")
+            a.clear-filter(href="javascript:void(0)" ng-click="filters.project = []" title="Limpar filtro por projeto" ng-if="filters.project.length > 0") &#10060;
             span.label Filtre por projeto
             ul.linguagem-list
                 li(ng-repeat="project in projects" ng-class="{active: hasFilter('project', project), inactive: !hasFilter('project', project)}")
                     span.entypo(href="javascript:void(0)") &#10006;
                     a(href="javascript:void(0);" ng-click="toggleFilter('project', project)")
-                         {{project}}
+                        |{{project}}
                         
                         
-        .filter-item.list-filter.space(ng-mouseleave="spaceSearch.name = ''" ng-mouseenter="focusSpaceSearch()")
+        .filter-item.list-filter.space(ng-mouseleave="spaceSearch.name = ''" ng-mouseenter="focusSpaceSearch()" style="z-index:1002")
+            a.clear-filter(href="javascript:void(0)" ng-click="filters.space = []" title="Limpar filtro por espaço" ng-if="filters.space.length > 0") &#10060;
             span.label Filtre por espaço
             input(id='space-search' type="text" ng-model="spaceSearch.name" placeholder="Busca")
             ul.space-list
                 li(ng-repeat="space in spaces" ng-class="{active: hasFilter('space', space.id), inactive: !hasFilter('space', space.id), hidden: spaceSearch.name && space.name.toLowerCase().indexOf(spaceSearch.name.toLowerCase()) === -1}")
                     span.entypo(href="javascript:void(0)") &#10006;
                     a(href="javascript:void(0);" ng-click="toggleFilter('space', space.id)")
-                         {{space.name}}
+                        |{{space.name}}
 
 
-        .filter-item.text-filter
-            input(type="text" ng-model="activeFilters.keyword" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" placeholder="Faça uma busca...")
+        .filter-item.text-filter(style="z-index:1001")
+            a.clear-filter(href="javascript:void(0)" ng-click="filters.keyword = ''" title="Limpar busca" ng-if="filters.keyword") &#10060;
+            input(type="text" ng-model="filters.keyword" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" placeholder="Faça uma busca...")
             
-        .filter-item.tick-filter(ng-show="(isEventFiltering() || tag || space) && !eventSearch.startDate && service.isHappening()" ng-class="{enabled:isFutureEvents}" ng-click="toggleFutureEvents()") Eventos futuros
+        .filter-item.tick-filter(ng-show="(isEventFiltering() || tag || space) && !filters.startDate && service.isHappening()" ng-class="{enabled:isFutureEvents}" ng-click="toggleFutureEvents()") Eventos futuros
 
 
     a.close.entypo(href="javascript:void(0)" ng-click="clearFilters()" ng-show="isFiltering()" title="Fechar busca") &#10060;
