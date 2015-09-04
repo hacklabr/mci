@@ -37,12 +37,12 @@
         "grunt-contrib-uglify": "latest",
         "grunt-contrib-connect": "latest",
         "grunt-contrib-watch": "latest",
-        "napa": "latest"
+        "napa": "latest",
+        "angular-leaflet-directive": "0.8.5"
     },
     "napa": {
         "angular-i18n": "angular/bower-angular-i18n",
         "angular-pickadate": "miguelpeixe/angular-pickadate",
-        "angular-leaflet": "tombatossals/angular-leaflet-directive",
         "angular-masonry": "passy/angular-masonry",
         "angular-dialog": "likeastore/ngDialog",
         "angular-infiniteScroll": "sroze/ngInfiniteScroll"
