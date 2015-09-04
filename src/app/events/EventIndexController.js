@@ -58,7 +58,6 @@ module.exports = [
             events = $filter('filter')(events, $scope.filters.keyword);
             
             if($scope.filters.startDate){
-                console.log($scope.filters);
                 events = $filter('byDateEvents')(events, $scope.filters.startDate, $scope.filters.endDate);
             }
             

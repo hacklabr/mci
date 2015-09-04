@@ -38,13 +38,26 @@
 }
 
 @media screen and (max-width: 1200px) {
+    .filters-container{
+        margin-left: -40px;
+        
+        .datepicker-container {
+            .datepicker {
+                margin-left: 119px;
+            }
+            
+            .datepicker:after, .datepicker:before{
+                left:26px !important;
+            }
+        }
+    }
 
     #masthead {
         width: 100%;
         height: auto;
         display: block;
         position: static;
-        background: url(../img/bg4.jpg) fixed top center no-repeat;
+        background: url(../img/barra_v2_vertical.jpg) fixed top center no-repeat;
         float: none;
         border-bottom: 1px solid rgba(0,0,0,0.2);
         padding: 20px 0 0;
@@ -103,10 +116,17 @@
     #mastfoot {
         margin-left: 0;
     }
+    
+    #highlight-event div.image {
+        margin-left:-22px !important;
+    }
 
 }
 
 @media screen and (max-width: 1000px) {
+    .filters-container{
+        margin-left: 0;
+    } 
     .main-header {
         h1 {
             float: none;
@@ -236,9 +256,13 @@
 
     #list-event.tag .main-header p {
         width: auto;
+        
     }
 
     #event-list {
+        .event-results h3{
+            margin-left:-30px;
+        }
         .event-list {
             margin: 0 0 0 -40px;
             li {
@@ -249,11 +273,11 @@
                     article {
                         border: 0;
                         .box-shadow(0 0 0 0);
-                        padding: 30px;
                     }
                 }
                 article {
                     padding: 30px;
+                    padding-left: 30px !important;
                 }
                 header {
                     width: 100%;
@@ -426,6 +450,34 @@
 }
 
 @media screen and (max-width: 600px) {
+    .filters-container{
+        .list-filter ul{
+            width:100%;
+            left:-1px;
+            li{
+                padding-bottom:1em;
+                padding-top:1em;
+                a {
+                    white-space: initial !important;
+                    line-height: 1.5em !important;
+                }
+            }
+        }
+
+        .datepicker-container {
+            position:absolute;
+            left:0;
+            right:0;
+            
+            .datepicker {
+                margin-left: 119px;
+            }
+            
+            .datepicker:after, .datepicker:before{
+                left:26px !important;
+            }
+        }
+    }
     #social {
         .items {
             li {

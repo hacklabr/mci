@@ -2,7 +2,7 @@ nav
 
     .filters-container
 
-        .filter-item.date-filter(ng-class="{filled:filters.startDate}")
+        .filter-item.date-filter(ng-class="{filled:filters.startDate}" style="z-index:1005")
 
             a.clear-filter(href="javascript:void(0)" ng-click="datepicker.clear()" title="Limpar filtro por data" ng-if="filters.startDate") &#10060;
 
@@ -27,7 +27,7 @@ nav
 
                     .datepicker(pickadate ng-model="filters.endDate" ng-show="datepicker.end.opened" min-date="datepicker.end.minDate" max-date="datepicker.end.maxDate" default-date="filters.startDate" prev-label="'anterior'" next-label="'próximo'")
 
-        .filter-item.list-filter
+        .filter-item.list-filter(style="z-index:1004")
             a.clear-filter(href="javascript:void(0)" ng-click="filters.linguagem = []" title="Limpar filtro por linguagem" ng-if="filters.linguagem.length > 0") &#10060;
             span.label Filtre por linguagens
             ul.linguagem-list
@@ -37,7 +37,7 @@ nav
                         |{{linguagem}}
                     
                     
-        .filter-item.list-filter
+        .filter-item.list-filter(style="z-index:1003")
             a.clear-filter(href="javascript:void(0)" ng-click="filters.project = []" title="Limpar filtro por projeto" ng-if="filters.project.length > 0") &#10060;
             span.label Filtre por projeto
             ul.linguagem-list
@@ -47,7 +47,7 @@ nav
                         |{{project}}
                         
                         
-        .filter-item.list-filter.space(ng-mouseleave="spaceSearch.name = ''" ng-mouseenter="focusSpaceSearch()")
+        .filter-item.list-filter.space(ng-mouseleave="spaceSearch.name = ''" ng-mouseenter="focusSpaceSearch()" style="z-index:1002")
             a.clear-filter(href="javascript:void(0)" ng-click="filters.space = []" title="Limpar filtro por espaço" ng-if="filters.space.length > 0") &#10060;
             span.label Filtre por espaço
             input(id='space-search' type="text" ng-model="spaceSearch.name" placeholder="Busca")
@@ -58,7 +58,7 @@ nav
                         |{{space.name}}
 
 
-        .filter-item.text-filter
+        .filter-item.text-filter(style="z-index:1001")
             a.clear-filter(href="javascript:void(0)" ng-click="filters.keyword = ''" title="Limpar busca" ng-if="filters.keyword") &#10060;
             input(type="text" ng-model="filters.keyword" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" placeholder="Faça uma busca...")
             
