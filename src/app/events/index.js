@@ -1,7 +1,5 @@
 'use strict';
 
-var BASE_URI = (new URL(document.baseURI)).pathname;
-
 angular.module('mci.events', [
     'ui.router',
     'pickadate',

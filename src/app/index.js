@@ -13,7 +13,6 @@ require('./social');
 
 require('./facebook');
 
-var BASE_URI = (new URL(document.baseURI)).pathname;
 /*
  * App
  */
@@ -190,6 +189,10 @@ angular.module('mci', [
     }
 ])
 
+.controller('MainCtrl',['$scope', '$rootScope', 'MetaService',
+function($scope, $rootScope, MetaService){
+    $rootScope.metaservice = MetaService;
+}])
 /*
  * Loading module
  */
@@ -232,6 +235,40 @@ angular.module('mci', [
 
     }
 ])
+
+.service('MetaService', function() {
+    var title = 'Test';
+    var metaDescription = '';
+    var metaKeywords = '';
+    var metaUrl = '';
+    var metaImage = '';
+    return {
+        set: function(newTitle, newMetaDescription, newKeywords, newUrl, newImage) {
+            title = newTitle; 
+            metaDescription = newMetaDescription;
+            metaKeywords = newKeywords;
+            metaUrl = newUrl;
+            metaImage = newImage;
+        },
+        metaTitle: function(){
+            var def = 'Cultura Independente';
+            return title ? def + ' | ' + title : def;
+        },
+        metaDescription: function() {
+            return metaDescription || 'Shows, exposições, histórias em quadrinhos, literatura e cinema';
+        },
+        metaKeywords: function() {
+            return metaKeywords || 'mci, shows, exposições, quadrinhos, literatura, cinema';
+        },
+        metaUrl: function() {
+            return metaUrl || document.location.href;
+        },
+        metaImage: function() {
+            var def = 'http://' + document.location.hostname + BASE_URI + 'img/logo.png';
+            return metaImage || def;
+        }
+    };
+})
 
 .directive('loadingStatusMessage', [
     'LoadingService',

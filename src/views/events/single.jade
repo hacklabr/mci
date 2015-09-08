@@ -43,8 +43,13 @@ section#single-event(ng-controller="EventController")
                     img(ng-src="{{photo.url}}")
     aside#event-sidebar
         #social
-        
-            .fb-like(data-layout="standard" data-action="like" data-show-faces="false" data-share="true" data-width="200")
+            span
+                |<a data-layout="standard"
+                |   data-action="like"
+                |   data-show-faces="false"
+                |   data-share="true"
+                |   data-width="200"
+                |   data-href="{{pageUrl}}">like</a>
 
             a(href="https://twitter.com/share" class="twitter-share-button" data-via="mcifest") Tweet
             script.

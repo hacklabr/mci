@@ -9,6 +9,13 @@ module.exports = [
     '$scope',
     function($q, $interval, $timeout, $state, Event, $scope) {
 
+        if(!$state.params.eventId){
+            $scope.metaservice.set(
+               'Agenda',
+               'Atrações deste mês',
+               null, null, null);
+        }
+
         // Change state to single event
         $scope.accessEvent = function(e) {
             $state.go('eventsSingle', {eventId: e.id});
@@ -35,7 +42,7 @@ module.exports = [
         };
 
         $scope.getFormattedDate = function(occurrence) {
-            return occurrence.moment.calendar(today);
+            return occurrence.moment ? occurrence.moment.calendar(today) : '';
         };
 
     }
