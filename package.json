@@ -17,6 +17,7 @@
         "body-parser": "latest",
         "jade": "latest",
         "compression": "latest",
+        "angular-simple-logger": "0.0.1",
         "async": "latest",
         "dotenv": "latest",
         "request": "latest",

@@ -10,6 +10,7 @@ module.exports = [
     function($state, $stateParams, Event, EventData, leafletData, $scope) {
 
         $scope.service = Event;
+        $scope.pageUrl = document.location.href;
 
         $scope.getDescription = function(e) {
             var description = '';
@@ -73,5 +74,20 @@ module.exports = [
             }
         };
 
+        var keywords = $scope.event.name
+                    .toLowerCase()
+                    .replace(/[^À-ÖØ-öø-ÿ\w ]/g,'')
+                    .split(/\s+/)
+                    .filter(function(piece){return piece.length > 3;})
+                    .join(', ');
+
+        var image = $scope.event['@files:header'] ? $scope.event['@files:header'].url : null;
+        $scope.metaservice.set(
+           $scope.event.name,
+           $scope.description,
+           keywords,
+           null,
+           image
+        );
     }
 ];
