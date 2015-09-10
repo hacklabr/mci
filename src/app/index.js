@@ -286,6 +286,30 @@ function($scope, $rootScope, MetaService){
     }
 ])
 
+.directive('mciFbLike', ['$timeout', function($timeout){
+    return {
+        'restrict': 'E',
+        'scope':{
+            'href': '=',
+        },
+        'template': '<a data-layout="standard"'         +
+                      ' data-action="like"'             +
+                      ' data-show-faces="false"'        +
+                      ' data-share="true"'              +
+                      ' data-width="200"'               +
+                      ' ng-if="href"'                   +
+                      ' ng-class="{\'fb-like\': href}"' +
+                      ' data-href="{{href}}">like</a>',
+        'link': function(scope, element, attrs) {
+            $timeout(function(){
+                if(FB && FB.XFBML && FB.XFBML.parse) {
+                    FB.XFBML.parse();
+                }
+            });
+        }
+    };
+}])
+
 .factory('loadingStatusInterceptor', [
     '$q',
     '$rootScope',
