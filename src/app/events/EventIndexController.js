@@ -48,6 +48,23 @@ module.exports = [
             if($scope.projects.indexOf(e.projectName) < 0){
                 $scope.projects.push(e.projectName);
             }
+            
+            // acha a primeira ocorrencia
+            e.occurrences.forEach(function(occ){
+                if(!e.firstOccurrence || e.firstOccurrence >= occ.startsOn){
+                    e.firstOccurrence = occ.startsOn;
+                }
+            });
+        });
+        
+        _events = _events.sort(function(e1, e2){
+            if(e1.firstOccurrence > e2.firstOccurrence){
+                return 1;
+            } else if(e1.firstOccurrence < e2.firstOccurrence){
+                return -1;
+            } else {
+                return 0;
+            }
         });
         
         function updateEvents(){
@@ -68,6 +85,7 @@ module.exports = [
                 }
 
                 $scope.events[e.projectName].push(e);
+                
             });
             
             $scope.toggleFeatured();

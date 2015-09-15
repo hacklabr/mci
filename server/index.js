@@ -52,13 +52,18 @@ function init() {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
-    app.use('/', express.static(__dirname + '/../dist'));
+    app.use(config.baseUri, express.static(__dirname + '/../dist'));
+
+    app.use(function(req, res, next) {
+      logger.log(req.method, req.url, req.path);
+      next();
+    });
 
     /*
      * News (Connected to WP JSON API PLUGIN)
      */
 
-    app.get('/api/news', function(req, res) {
+    app.get(config.baseUri + 'api/news', function(req, res) {
 
         if(!config.wpUrl){
             logger.error('WordPress API not defined');
@@ -77,7 +82,7 @@ function init() {
 
     });
 
-    app.get('/api/news/:postId', function(req, res) {
+    app.get(config.baseUri + 'api/news/:postId', function(req, res) {
 
         if(!config.wpUrl)
             res.status(404).send('WordPress API not defined');
@@ -100,7 +105,7 @@ function init() {
 
     var options = fs.existsSync('./options.json') ? JSON.parse(fs.readFileSync('./options.json', 'utf8')) : {};
 
-    app.get('/api/data', function(req, res) {
+    app.get(config.baseUri + 'api/data', function(req, res) {
 
         var data = {
             config: {
@@ -122,7 +127,7 @@ function init() {
 
     var loadedEvents = [];
 
-    app.get('/api/event/:eventId', function(req, res) {
+    app.get(config.baseUri + 'api/event/:eventId', function(req, res) {
         var eventId = req.params.eventId;
         var eventSelect = [
             'id',
@@ -189,7 +194,7 @@ function init() {
 
     });
 
-    app.all('/agenda/limpar-cache', function(req, res) {
+    app.all(config.baseUri + 'agenda/limpar-cache', function(req, res) {
 
         if(config.password && (!req.body.password || req.body.password !== config.password)) {
 
@@ -217,7 +222,7 @@ function init() {
 
     });
 
-    app.all('/agenda/atualizar', function(req, res) {
+    app.all(config.baseUri + 'agenda/atualizar', function(req, res) {
 
         if(config.password && (!req.body.password || req.body.password !== config.password)) {
 
@@ -263,7 +268,7 @@ function init() {
             }, 1000 * 60 * 10);
         }
 
-        app.get('/api/social', function(req, res) {
+        app.get(config.baseUri + 'api/social', function(req, res) {
 
             var perPage = parseInt(req.query.perPage || 20);
             var page = parseInt(req.query.page || 1);
@@ -286,7 +291,7 @@ function init() {
 
     }
 
-    app.get('/*', function(req, res) {
+    app.get(config.baseUri + '*', function(req, res) {
         res.sendfile('dist/views/index.html');
     });
 
