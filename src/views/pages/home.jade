@@ -9,14 +9,11 @@ section#home
                         a(href= config.baseUri+"noticias/{{news.first.ID}}/" ng-bind-html="getTitle(news.first)")
                 section.excerpt(ng-bind-html="getExcerpt(news.first)")
 
-        article#second.feat
-            .image(style="background-image:url({{getFeaturedImage(news.second)}})")
-            .post-content
-                header
-                    h2
-                        a(href= config.baseUri+"noticias/{{news.second.ID}}/" ng-bind-html="getTitle(news.second)")
-
-        a.more-news(href= config.baseUri+"noticias") Todas as notícias
+            .clear
+            .more-news-container
+                a.more-news(href= config.baseUri+"noticias") Todas as notícias
+            .clear
+            
 
     section#intro.clearfix
 
