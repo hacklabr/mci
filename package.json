@@ -17,6 +17,7 @@
         "body-parser": "latest",
         "jade": "latest",
         "compression": "latest",
+        "angular-simple-logger": "0.0.1",
         "async": "latest",
         "dotenv": "latest",
         "request": "latest",
@@ -37,7 +38,8 @@
         "grunt-contrib-uglify": "latest",
         "grunt-contrib-connect": "latest",
         "grunt-contrib-watch": "latest",
-        "napa": "latest"
+        "napa": "latest",
+        "angular-leaflet-directive": "0.8.5"
     },
     "napa": {
         "angular-i18n": "angular/bower-angular-i18n",
