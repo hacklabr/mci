@@ -41,13 +41,22 @@ module.exports = [
             return $sce.trustAsHtml(icon);
 
         };
+        
+        var loading = false;
 
         $scope.nextPage = function() {
+            if(loading){
+                return ;
+            }
+            
+            loading = true;
+            
             SocialData.nextPage().then(function(data) {
                 if(data) {
                     if(data.pagination.currentPage == data.pagination.totalPages)
                         $scope.lastPage = true;
                     $scope.items = $scope.items.concat(data.data);
+                    loading = false;
                 }
             });
         };
