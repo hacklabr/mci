@@ -30,7 +30,7 @@ module.exports = [
         
         // fake project names
         _events.forEach(function(e){
-            e.projectName = e.project ? e.project.name : 'Sem Projeto';
+            e.projectName = e.project && e.project.id != window.projectId ? e.project.name : ''; 
         });
         
         // sort events by project name
