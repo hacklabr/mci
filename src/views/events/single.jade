@@ -1,4 +1,6 @@
 section#single-event(ng-controller="EventController")
+    script(mci-event="event", type="application/ld+json")
+
     header.event-header.main-header.clearfix(ng-class="{'with-image': event['@files:header'].url}")
         .clearfix
             .image(style="background-image:url({{event['@files:header'].url}});")

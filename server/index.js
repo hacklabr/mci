@@ -55,7 +55,7 @@ function init() {
     app.use(config.baseUri, express.static(__dirname + '/../dist'));
 
     app.use(function(req, res, next) {
-      logger.log(req.method, req.url, req.path);
+      logger.log(req.method, req.url);
       next();
     });
 

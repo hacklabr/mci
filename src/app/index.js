@@ -302,10 +302,61 @@ function($scope, $rootScope, MetaService){
                       ' data-href="{{href}}">like</a>',
         'link': function(scope, element, attrs) {
             $timeout(function(){
-                if(FB && FB.XFBML && FB.XFBML.parse) {
+                if(window.FB && FB.XFBML && FB.XFBML.parse) {
                     FB.XFBML.parse();
                 }
             });
+        }
+    };
+}])
+
+.directive('mciEvent', ['$timeout',  function($timeout) {
+    return {
+        'restrict': 'A',
+        'scope':{
+            'evt': '=mciEvent',
+        },
+        'link': function(scope, element, attrs) {
+            var baseUrl = document.baseURI + 'agenda/';
+            scope.ld = [];
+
+            var occurrences = scope.evt.occurrences;
+            for(var i=0; occurrences && i < occurrences.length; i++){
+                var occ = occurrences[i];
+                var ld = {
+                  "@context": "http://schema.org",
+                  "@type": "Event",
+                  "name": scope.evt.name,
+                  "startDate" : occ.moment.format(),
+                  "url" : baseUrl + scope.evt.id,
+                  "location" : {
+                    "@type" : "Place",
+                    "name" : occ.space.name,
+                    "address" : occ.space.endereco,
+                    "geo": {
+                        "@type": "GeoCoordinates",
+                        "latitude": occ.space.location.latitude,
+                        "longitude": occ.space.location.longitude
+                    }
+                  },
+                  "offers" : {
+                    "@type" : "AggregateOffer",
+                    "category" : "primary",
+                    "priceCurrency": "BRL",
+                    "lowPrice" : (occ.price || '').replace(/[^0-9,.]/g, '') || '0',
+                    "url" : baseUrl + scope.evt.id
+                  }
+                };
+
+                if(scope.evt['@files:header'] && scope.evt['@files:header'].url) {
+                    ld.image = scope.evt['@files:header'].url;
+                }
+
+                scope.ld.push(ld);
+            }
+            if (element.context) {
+                element.context.innerHTML = angular.toJson(scope.ld);
+            }
         }
     };
 }])
