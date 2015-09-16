@@ -10,10 +10,10 @@ module.exports = [
     function($q, $interval, $timeout, $state, Event, $scope) {
 
         if(!$state.params.eventId){
-            $scope.metaservice.set(
-               'Agenda',
-               'Atrações deste mês',
-               null, null, null);
+            $scope.metaservice.set('title', 'Agenda');
+            $scope.metaservice.set('description', 'Atrações do mês');
+            $scope.metaservice.set('image', null);
+            $scope.metaservice.set('url', null);
         }
 
         // Change state to single event

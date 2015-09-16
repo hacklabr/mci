@@ -53,5 +53,12 @@ angular.module('mci.home', [
         $scope.allEvents = Event.getEvents();
         $scope.allSpaces = Event.getSpaces();
 
+
+
+        $scope.metaservice.set('title', 'Mês da Cultura Independente');
+        $scope.metaservice.set('description', $scope.allEvents.length + ' atrações em ' +
+                                              $scope.allSpaces.length + ' lugares!');
+        $scope.metaservice.set('image', null);
+        $scope.metaservice.set('url', null);
     }
 ]);

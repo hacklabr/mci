@@ -1,15 +1,15 @@
 head
-    title(ng-bind="metaservice.metaTitle()")
+    title
     meta(name="viewport", content="width=device-width,initial-scale=1.0")
     meta(name="fragment", content="!")
-    meta(name="description", content="{{ metaservice.metaDescription() }}")
-    meta(name="keywords", content="{{ metaservice.metaKeywords() }}")
+    meta(name="description",  mci-og="description", content="Um mês de shows, exposições, histórias em quadrinhos, literatura e cinema")
+    meta(name="keywords",  mci-og="keywords", content="culturaindependente, show, exposições, histórias, quadrinhos, literatura, cinema")
 
-    meta(property="og:type",          content="website")
-    meta(property="og:title",         content="{{ metaservice.metaTitle() }}")
-    meta(property="og:description",   content="{{ metaservice.metaDescription() }}")
-    meta(property="og:url",           content="{{ metaservice.metaUrl() }}")
-    meta(property="og:image",         content="{{ metaservice.metaImage() }}")
+    meta(property="og:type", content="website")
+    meta(property="og:title" mci-og="title" content="Mês da Cultura Independente")
+    meta(property="og:description" mci-og="description" content="Um mês de shows, exposições, histórias em quadrinhos, literatura e cinema")
+    meta(property="og:url" mci-og="url" content="http://culturaindependente.org/")
+    meta(property="og:image" mci-og="image" content= config.baseUri + "img/logo.png")
 
     base(href= config.baseUri)
     script(type="text/javascript")

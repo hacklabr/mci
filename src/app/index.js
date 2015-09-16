@@ -192,6 +192,11 @@ angular.module('mci', [
 .controller('MainCtrl',['$scope', '$rootScope', 'MetaService',
 function($scope, $rootScope, MetaService){
     $rootScope.metaservice = MetaService;
+
+    $scope.metaservice.set('description', 'Notícias e eventos');
+    $scope.metaservice.set('title', null);
+    $scope.metaservice.set('image', null);
+    $scope.metaservice.set('url', null);
 }])
 /*
  * Loading module
@@ -237,38 +242,67 @@ function($scope, $rootScope, MetaService){
 ])
 
 .service('MetaService', function() {
-    var title = 'Test';
-    var metaDescription = '';
-    var metaKeywords = '';
-    var metaUrl = '';
-    var metaImage = '';
-    return {
-        set: function(newTitle, newMetaDescription, newKeywords, newUrl, newImage) {
-            title = newTitle; 
-            metaDescription = newMetaDescription;
-            metaKeywords = newKeywords;
-            metaUrl = newUrl;
-            metaImage = newImage;
+    var og = {
+        'url': '', 
+        'title': '', 
+        'image': '', 
+        'description': ''
+    };
+
+    var getter = {
+        'url':         function() {
+            return og.url || document.location.href;
         },
-        metaTitle: function(){
-            var def = 'Cultura Independente';
-            return title ? def + ' | ' + title : def;
+        'title':       function() {
+            return ['Cultura Independente', og.title].filter(function(e){ return e; }).join('|');
         },
-        metaDescription: function() {
-            return metaDescription || 'Shows, exposições, histórias em quadrinhos, literatura e cinema';
+        'image':       function() {
+            return og.image || ('http://'+document.location.hostname+BASE_URI+'img/logo.png');
         },
-        metaKeywords: function() {
-            return metaKeywords || 'mci, shows, exposições, quadrinhos, literatura, cinema';
-        },
-        metaUrl: function() {
-            return metaUrl || document.location.href;
-        },
-        metaImage: function() {
-            var def = 'http://' + document.location.hostname + BASE_URI + 'img/logo.png';
-            return metaImage || def;
+        'description': function() {
+            return og.description || 'Shows, exposições, histórias em quadrinhos, literatura e cinema';
         }
     };
+
+    var $watchers = {};
+
+    var metaservice = {
+        set: function(key, value) {
+            og[key] = value || '';
+
+            for(var i=0; $watchers[key] && i < $watchers[key].length; i++ ) {
+                var callback = $watchers[key][i];
+                callback(metaservice.get(key));
+            }
+        },
+        get: function(key) {
+            return getter[key] ? getter[key]() : '';
+        },
+        $watch: function(key, callback) {
+            if(!key) return;
+
+            if(!$watchers[key]) {
+                $watchers[key] = [];
+            }
+            $watchers[key].push(callback);
+        }
+    };
+
+    return metaservice;
 })
+
+.directive('mciOg', ['MetaService', function(MetaService){
+    return {
+        'restrict': 'A',
+        'link': function(scope, element, attrs) {
+            if(!attrs.mciOg) { return; }
+            MetaService.$watch(attrs.mciOg, function(value){
+                element.prop('content', value);
+                element.attr('content', value);
+            });
+        }
+    };
+}])
 
 .directive('loadingStatusMessage', [
     'LoadingService',
@@ -329,16 +363,6 @@ function($scope, $rootScope, MetaService){
                   "name": scope.evt.name,
                   "startDate" : occ.moment.format(),
                   "url" : baseUrl + scope.evt.id,
-                  "location" : {
-                    "@type" : "Place",
-                    "name" : occ.space.name,
-                    "address" : occ.space.endereco,
-                    "geo": {
-                        "@type": "GeoCoordinates",
-                        "latitude": occ.space.location.latitude,
-                        "longitude": occ.space.location.longitude
-                    }
-                  },
                   "offers" : {
                     "@type" : "AggregateOffer",
                     "category" : "primary",
@@ -347,6 +371,19 @@ function($scope, $rootScope, MetaService){
                     "url" : baseUrl + scope.evt.id
                   }
                 };
+
+                if(occ.space) {
+                    ld.location = {
+                    "@type" : "Place",
+                    "name" : occ.space.name,
+                    "address" : occ.space.endereco,
+                    "geo": {
+                        "@type": "GeoCoordinates",
+                        "latitude": occ.space.location.latitude,
+                        "longitude": occ.space.location.longitude
+                    }
+                  };
+                }
 
                 if(scope.evt['@files:header'] && scope.evt['@files:header'].url) {
                     ld.image = scope.evt['@files:header'].url;

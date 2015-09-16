@@ -82,12 +82,9 @@ module.exports = [
                     .join(', ');
 
         var image = $scope.event['@files:header'] ? $scope.event['@files:header'].url : null;
-        $scope.metaservice.set(
-           $scope.event.name,
-           $scope.description,
-           keywords,
-           null,
-           image
-        );
+        $scope.metaservice.set('title', $scope.event.name);
+        $scope.metaservice.set('description', $scope.description);
+        $scope.metaservice.set('image', $scope.image);
+        $scope.metaservice.set('url', null);
     }
 ];
