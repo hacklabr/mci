@@ -20,7 +20,7 @@ module.exports = function(cb) {
     request(_.extend(defaultReq, {
         url: config.apiUrl + '/project/getChildrenIds/' + config.projectId
     }), function(err, res, body){
-        var ids = tryJSON(body);
+        var ids = tryJSON(body) || [];
         ids.push(config.projectId);
         
         var eventsReq = {
