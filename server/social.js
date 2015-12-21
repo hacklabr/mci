@@ -104,7 +104,7 @@ module.exports = function(cb) {
 
                 var d = [];
 
-                if(body) {
+                if(body && body.photos) {
 
                     _.each(body.photos.photo, function(item) {
 
